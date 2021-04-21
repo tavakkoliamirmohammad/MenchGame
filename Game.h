@@ -7,10 +7,14 @@
 class Game {
     Game();
 
+    vector<Piece *> getPlayerPieces(Color color);
+
+    Player *getPlayerByPiece(Piece *);
+
     ~Game();
 
 private:
-    Board *Board_;
+    Board *board_;
     vector<Player *> players_;
 };
 

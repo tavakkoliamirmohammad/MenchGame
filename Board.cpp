@@ -10,13 +10,13 @@ Board::Board(vector<ColorModel *> colorModels) : colorModels_(std::move(colorMod
             circles.push_back(new Circle(colorModel));
         }
         circlesMap_[colorModel->getColor()] = circles;
-
         vector<Piece *> pieces;
         pieces.reserve(4);
         for (int i = 0; i < 4; ++i) {
             pieces.push_back(new Piece(colorModel));
         }
         piecesMap_[colorModel->getColor()] = pieces;
+        colors.push_back(colorModel->getColor());
     }
 }
 

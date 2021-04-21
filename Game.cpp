@@ -104,10 +104,7 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 void Game::loop() {
     int i = 0;
     while (i < 1000) {
-        auto command = aiEngine_->makeMove(turn_, rollDice());
-        if (command != nullptr) {
-            commandStream_->push(command);
-        }
+        aiEngine_->run(turn_, rollDice());
         --i;
     }
 }
@@ -118,4 +115,12 @@ int Game::rollDice() {
     int diceNumber = 1 + (rand() % 6);
     printf("%d \n", diceNumber);
     return diceNumber;
+}
+
+void Game::pushCommand(Command *command) {
+    commandStream_->push(command);
+}
+
+Command *Game::popCommand() {
+    return commandStream_->pop();
 }

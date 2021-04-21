@@ -10,9 +10,11 @@ class AIEngine {
 public:
     AIEngine(Game *game);
 
-    Command *makeMove(Color color, int diceNumber);
+    void run(Color color, int diceNumber);
 
 private:
+    Command *makeMove(Color color, int diceNumber);
+
     Game *game_;
 };
 

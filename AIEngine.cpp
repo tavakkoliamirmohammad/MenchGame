@@ -21,3 +21,10 @@ Command *AIEngine::makeMove(Color color, int diceNumber) {
     }
     return nullptr;
 }
+
+void AIEngine::run(Color color, int diceNumber) {
+    Command *command = makeMove(color, diceNumber);
+    if (command != nullptr) {
+        game_->pushCommand(command);
+    }
+}

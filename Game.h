@@ -23,6 +23,10 @@ public:
 
     void movePiece(Piece *piece, Circle *newPosition);
 
+    Command *popCommand();
+
+    void pushCommand(Command *);
+
     void loop();
 
     ~Game();

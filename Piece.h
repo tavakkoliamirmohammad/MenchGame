@@ -8,6 +8,8 @@ class Piece : public GameActor {
 public:
     Piece(ColorModel *);
 
+    Color getColor();
+
 private:
     ColorModel *colorModel_;
 };

@@ -16,7 +16,7 @@ Board::Board(vector<ColorModel *> colorModels) : colorModels_(std::move(colorMod
             pieces.push_back(new Piece(colorModel));
         }
         piecesMap_[colorModel->getColor()] = pieces;
-        colors.push_back(colorModel->getColor());
+        colors_.push_back(colorModel->getColor());
     }
 }
 
@@ -37,4 +37,8 @@ vector<Piece *> Board::getPiecesByColor(Color circleColor) {
 
 vector<Circle *> Board::getCirclesByColor(Color circleColor) {
     return this->circlesMap_[circleColor];
+}
+
+vector<Color> Board::getColors() {
+    return colors_;
 }

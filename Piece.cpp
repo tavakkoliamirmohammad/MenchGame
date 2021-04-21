@@ -1,5 +1,9 @@
 #include "Piece.h"
 
-Piece::Piece(ColorModel* colorModel) : colorModel_(colorModel) {
+Piece::Piece(ColorModel *colorModel) : colorModel_(colorModel) {
 
+}
+
+Color Piece::getColor() {
+    return colorModel_->getColor();
 }

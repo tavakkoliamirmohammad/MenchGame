@@ -16,13 +16,15 @@ public:
 
     vector<Piece *> getPiecesByColor(Color);
 
+    vector<Color> getColors();
+
     ~Board();
 
 private:
     unordered_map<Color, vector<Circle *>> circlesMap_;
     unordered_map<Color, vector<Piece *>> piecesMap_;
     vector<ColorModel *> colorModels_;
-    vector<Color> colors;
+    vector<Color> colors_;
 };
 
 #endif //MENSCH_BOARD_H

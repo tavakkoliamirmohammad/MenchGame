@@ -7,6 +7,8 @@ class Circle {
 public:
     Circle(ColorModel *);
 
+    Color getColor();
+
 private:
     ColorModel *circleModel_;
 };

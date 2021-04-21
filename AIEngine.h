@@ -7,7 +7,8 @@
 
 class AIEngine {
 public:
-    AIEngine(Game* game);
+    AIEngine(Game *game);
+
     Command *makeMove(Color color, int diceNumber);
 
 private:

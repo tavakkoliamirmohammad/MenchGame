@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <algorithm>
 
 Game::Game() {
     vector<ColorModel *> colorModels;
@@ -71,4 +72,34 @@ vector<Circle *> Game::returnAvailablePositions(BoardCirclePieceInfo *boardCircl
         }
     }
     return availableCircles;
+}
+
+BoardCirclePieceInfo *Game::getPiecePositionInfo(Piece *piece) {
+    for (auto info: boardCirclePieceInfo_) {
+        if (info->getPiece() == piece) {
+            return info;
+        }
+    }
+    return nullptr;
+}
+
+Circle *Game::getStartCircleByColor(Color color) {
+    return board_->getCirclesByColor(color)[0];
+}
+
+void Game::movePiece(Piece *piece, Circle *newPosition) {
+    auto piecePositionInfo = getPiecePositionInfo(piece);
+    if (piecePositionInfo != nullptr) {
+        int position = -1;
+        auto it = find(boardCirclePieceInfo_.begin(), boardCirclePieceInfo_.end(), piecePositionInfo);
+        if (it != boardCirclePieceInfo_.cend()) {
+            position = distance(boardCirclePieceInfo_.begin(), it);
+        }
+        if (position != -1) {
+            boardCirclePieceInfo_.erase(boardCirclePieceInfo_.begin() + position);
+        } else {
+            std::putc('N');
+        }
+    }
+    boardCirclePieceInfo_.push_back(new BoardCirclePieceInfo(piece, newPosition));
 }

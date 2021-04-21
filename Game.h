@@ -15,6 +15,12 @@ public:
 
     vector<Circle *> returnAvailablePositions(BoardCirclePieceInfo *boardCirclePieceInfo, int offset);
 
+    Circle *getStartCircleByColor(Color color);
+
+    BoardCirclePieceInfo *getPiecePositionInfo(Piece *piece);
+
+    void movePiece(Piece *piece, Circle *newPosition);
+
     ~Game();
 
 private:

@@ -42,3 +42,14 @@ vector<Circle *> Board::getCirclesByColor(Color circleColor) {
 vector<Color> Board::getColors() {
     return colors_;
 }
+
+Color Board::getNextColor(Color color) {
+    int originalColorPosition = 0;
+    for (int i = 0; i < colors_.size(); ++i) {
+        if (colors_[i] == color) {
+            originalColorPosition = i;
+        }
+    }
+    int nextColorPosition = (originalColorPosition + 1) % colors_.size();
+    return colors_[nextColorPosition];
+}

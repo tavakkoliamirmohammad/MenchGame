@@ -18,6 +18,8 @@ public:
 
     vector<Color> getColors();
 
+    Color getNextColor(Color color);
+
     ~Board();
 
 private:

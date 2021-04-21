@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "BoardCirclePieceInfo.h"
+#include "AIEngine.h"
 
 class Game {
 public:
@@ -21,14 +22,20 @@ public:
 
     void movePiece(Piece *piece, Circle *newPosition);
 
+    void loop();
+
     ~Game();
 
 private:
-    Board *board_;
-    vector<Player *> players_;
 
     vector<Circle *> getAvailableCircleFromStart(BoardCirclePieceInfo *boardCirclePieceInfo, int offset);
+    static int rollDice();
 
+    Board *board_;
+    vector<Player *> players_;
+    AIEngine *aiEngine_;
+    Color turn_;
+    vector<Command *> commandStream_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;
 };
 

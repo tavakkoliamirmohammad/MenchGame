@@ -12,6 +12,8 @@ Game::Game() {
     for (ColorModel *colorModel : colorModels) {
         this->players_.emplace_back(new Player(colorModel));
     }
+    aiEngine_ = new AIEngine(this);
+    turn_ = board_->getColors()[0];
 }
 
 vector<Piece *> Game::getPlayerPieces(Color color) {
@@ -38,16 +40,10 @@ vector<Circle *> Game::getAvailableCircleFromStart(BoardCirclePieceInfo *boardCi
             break;
         }
     }
-    int originalColorPosition = 0;
-    for (int i = 0; i < colors.size(); ++i) {
-        if (colors[i] == boardCirclePieceInfo->getCircle()->getColor()) {
-            originalColorPosition = i;
-        }
-    }
     if (circlePosition + offset > circles.size() - 4) {
         // go to next color
-        int nextColorPosition = (originalColorPosition + 1) % colors.size();
-        auto nextCircles = board_->getCirclesByColor(colors[nextColorPosition]);
+        auto nextCircles = board_->getCirclesByColor(
+                board_->getNextColor(boardCirclePieceInfo->getCircle()->getColor()));
         positionCircles.push_back(nextCircles[circlePosition + offset - (circles.size() - 4)]);
     } else {
         // stay in the same color
@@ -98,8 +94,27 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
         if (position != -1) {
             boardCirclePieceInfo_.erase(boardCirclePieceInfo_.begin() + position);
         } else {
-            std::putc('N');
+            std::putchar('N');
         }
     }
     boardCirclePieceInfo_.push_back(new BoardCirclePieceInfo(piece, newPosition));
+}
+
+void Game::loop() {
+    int i = 0;
+    while (i < 1000) {
+        auto command = aiEngine_->makeMove(turn_, rollDice());
+        if (command != nullptr) {
+            commandStream_.push_back(command);
+        }
+        --i;
+    }
+}
+
+int Game::rollDice() {
+    srand((unsigned) time(0));
+    printf("Your dice has been rolled! You got: \n ");
+    int diceNumber = 1 + (rand() % 6);
+    printf("%d \n", diceNumber);
+    return diceNumber;
 }

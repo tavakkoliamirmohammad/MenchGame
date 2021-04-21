@@ -3,7 +3,8 @@
 
 #include "Command.h"
 #include "ColorModel.h"
-#include "Game.h"
+
+class Game;
 
 class AIEngine {
 public:

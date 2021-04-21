@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "BoardCirclePieceInfo.h"
 #include "AIEngine.h"
+#include "CommandStream.h"
 
 class Game {
 public:
@@ -29,13 +30,14 @@ public:
 private:
 
     vector<Circle *> getAvailableCircleFromStart(BoardCirclePieceInfo *boardCirclePieceInfo, int offset);
+
     static int rollDice();
 
     Board *board_;
     vector<Player *> players_;
     AIEngine *aiEngine_;
     Color turn_;
-    vector<Command *> commandStream_;
+    CommandStream *commandStream_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;
 };
 

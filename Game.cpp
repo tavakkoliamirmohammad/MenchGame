@@ -14,6 +14,7 @@ Game::Game() {
     }
     aiEngine_ = new AIEngine(this);
     turn_ = board_->getColors()[0];
+    commandStream_ = new CommandStream();
 }
 
 vector<Piece *> Game::getPlayerPieces(Color color) {
@@ -105,7 +106,7 @@ void Game::loop() {
     while (i < 1000) {
         auto command = aiEngine_->makeMove(turn_, rollDice());
         if (command != nullptr) {
-            commandStream_.push_back(command);
+            commandStream_->push(command);
         }
         --i;
     }

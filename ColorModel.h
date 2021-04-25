@@ -1,8 +1,8 @@
 #ifndef MENSCH_COLORMODEL_H
 #define MENSCH_COLORMODEL_H
 
-enum class Color {
-    Green, Red, Blue, Yellow
+enum Color {
+    Green, Red, Blue, Yellow,
 };
 
 class ColorModel {

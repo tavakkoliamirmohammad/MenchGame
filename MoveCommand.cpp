@@ -1,4 +1,7 @@
 #include "MoveCommand.h"
+#include <iostream>
+
+using namespace std;
 
 MoveCommand::MoveCommand(Game *game, Piece *piece, Circle *circle) : game_(game), piece_(piece), circle_(circle) {
 
@@ -11,6 +14,7 @@ void MoveCommand::execute() {
         previousCircle_ = previousPosition->getCircle();
     }
     game_->movePiece(piece_, circle_);
+    cout << "Moving piece " << piece_->getColor() << " to circle " << circle_->getColor() << endl;
 }
 
 void MoveCommand::undo() {
@@ -19,4 +23,3 @@ void MoveCommand::undo() {
     }
 }
 
-MoveCommand::~MoveCommand() = default;

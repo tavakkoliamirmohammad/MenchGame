@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "BoardCirclePieceInfo.h"
 #include "AIEngine.h"
+#include "PhysicsEngine.h"
 #include "CommandStream.h"
 
 class Game {
@@ -40,6 +41,7 @@ private:
     Board *board_;
     vector<Player *> players_;
     AIEngine *aiEngine_;
+    PhysicsEngine *physicsEngine_;
     Color turn_;
     CommandStream *commandStream_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;

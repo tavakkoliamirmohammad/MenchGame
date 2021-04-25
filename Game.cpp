@@ -13,6 +13,7 @@ Game::Game() {
         this->players_.emplace_back(new Player(colorModel));
     }
     aiEngine_ = new AIEngine(this);
+    physicsEngine_ = new PhysicsEngine(this);
     turn_ = board_->getColors()[0];
     commandStream_ = new CommandStream();
 }
@@ -103,17 +104,22 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 
 void Game::loop() {
     int i = 0;
+    int turn_count = 0;
     while (i < 1000) {
-        aiEngine_->run(turn_, rollDice());
+        int diceNumber = rollDice();
+        aiEngine_->run(turn_, diceNumber);
+        physicsEngine_->run();
+        if (diceNumber != 6) {
+            turn_ = board_->getColors()[(turn_count + 1) % board_->getColors().size()];
+        }
+        ++turn_count;
         --i;
     }
 }
 
 int Game::rollDice() {
     srand((unsigned) time(0));
-    printf("Your dice has been rolled! You got: \n ");
     int diceNumber = 1 + (rand() % 6);
-    printf("%d \n", diceNumber);
     return diceNumber;
 }
 

@@ -11,10 +11,12 @@ Command *AIEngine::makeMove(Color color, int diceNumber) {
         BoardCirclePieceInfo *boardCirclePieceInfo = game_->getPiecePositionInfo(piece);
         if (boardCirclePieceInfo == nullptr) {
             // check multiple entering
-            if (diceNumber == 6) return new MoveCommand(game_, piece, game_->getStartCircleByColor(color));
+            if (diceNumber == 6) {
+                return new MoveCommand(game_, piece, game_->getStartCircleByColor(color));
+            }
         } else {
             auto positions = game_->returnAvailablePositions(boardCirclePieceInfo, diceNumber);
-            if (positions.size() > 1) {
+            if (!positions.empty()) {
                 return new MoveCommand(game_, piece, positions[0]);
             }
         }

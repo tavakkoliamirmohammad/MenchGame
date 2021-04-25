@@ -14,6 +14,8 @@ public:
 
     vector<Piece *> getPlayerPieces(Color color);
 
+    vector<Circle *> getCircleByColor(Color color);
+
     Circle *getPiecePositionInBoard(Piece *piece);
 
     vector<Circle *> returnAvailablePositions(BoardCirclePieceInfo *boardCirclePieceInfo, int offset);

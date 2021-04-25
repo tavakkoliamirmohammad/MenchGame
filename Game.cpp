@@ -105,15 +105,14 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 void Game::loop() {
     int i = 0;
     int turn_count = 0;
-    while (i < 1000) {
+    while (true) {
         int diceNumber = rollDice();
         aiEngine_->run(turn_, diceNumber);
         physicsEngine_->run();
         if (diceNumber != 6) {
-            turn_ = board_->getColors()[(turn_count + 1) % board_->getColors().size()];
+            turn_count = (turn_count + 1) % board_->getColors().size();
+            turn_ = board_->getColors()[turn_count];
         }
-        ++turn_count;
-        --i;
     }
 }
 
@@ -129,4 +128,8 @@ void Game::pushCommand(Command *command) {
 
 Command *Game::popCommand() {
     return commandStream_->pop();
+}
+
+vector<Circle *> Game::getCircleByColor(Color color) {
+    return board_->getCirclesByColor(color);
 }

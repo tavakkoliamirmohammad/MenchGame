@@ -6,7 +6,7 @@ class Game;
 
 class PhysicsEngine {
 public:
-    PhysicsEngine(Game *game);
+    explicit PhysicsEngine(Game *game);
 
     void run();
 

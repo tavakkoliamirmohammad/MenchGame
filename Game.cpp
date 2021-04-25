@@ -22,15 +22,6 @@ vector<Piece *> Game::getPlayerPieces(Color color) {
     return board_->getPiecesByColor(color);
 }
 
-Circle *Game::getPiecePositionInBoard(Piece *piece) {
-    for (auto pieceInfo : boardCirclePieceInfo_) {
-        if (pieceInfo->getPiece() == piece) {
-            return pieceInfo->getCircle();
-        }
-    }
-    return nullptr;
-}
-
 vector<Circle *> Game::getAvailableCircleFromStart(BoardCirclePieceInfo *boardCirclePieceInfo, int offset) {
     vector<Circle *> positionCircles;
     auto circles = board_->getCirclesByColor(boardCirclePieceInfo->getCircle()->getColor());
@@ -170,4 +161,17 @@ bool Game::isGameFinished() {
         }
     }
     return false;
+}
+
+Game::~Game() {
+    delete board_;
+    delete physicsEngine_;
+    delete aiEngine_;
+    delete commandStream_;
+    for (auto player : players_) {
+        delete player;
+    }
+    for (auto info: boardCirclePieceInfo_) {
+        delete info;
+    }
 }

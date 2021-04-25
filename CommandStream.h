@@ -8,8 +8,10 @@ using namespace std;
 
 class CommandStream {
 public:
-    void push(Command* command);
-    Command* pop();
+    void push(Command *command);
+
+    Command *pop();
+
 private:
     queue<Command *> commands_;
 };

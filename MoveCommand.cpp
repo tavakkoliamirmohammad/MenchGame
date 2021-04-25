@@ -22,8 +22,8 @@ void MoveCommand::execute() {
         }
     }
     int piecePosition = 0;
-    for (int i = 0; i < game_->getPlayerPieces(circle_->getColor()).size(); ++i) {
-        if (game_->getPlayerPieces(circle_->getColor())[i] == piece_) {
+    for (int i = 0; i < game_->getPlayerPieces(piece_->getColor()).size(); ++i) {
+        if (game_->getPlayerPieces(piece_->getColor())[i] == piece_) {
             piecePosition = i;
             break;
         }

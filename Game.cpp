@@ -133,7 +133,6 @@ void Game::loop() {
 int Game::rollDice() {
     srand((unsigned) time(0));
     int diceNumber = 1 + (rand() % 6);
-    cout << diceNumber << endl;
     return diceNumber;
 }
 

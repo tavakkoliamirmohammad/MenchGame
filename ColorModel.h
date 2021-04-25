@@ -2,7 +2,7 @@
 #define MENSCH_COLORMODEL_H
 
 enum Color {
-    Green, Red, Blue, Yellow,
+    Blue, Green, Yellow, Red
 };
 
 class ColorModel {

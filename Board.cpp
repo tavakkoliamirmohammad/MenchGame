@@ -44,7 +44,7 @@ vector<Color> Board::getColors() {
 }
 
 Color Board::getNextColor(Color color) {
-    int originalColorPosition = 0;
+    int originalColorPosition = -1;
     for (int i = 0; i < colors_.size(); ++i) {
         if (colors_[i] == color) {
             originalColorPosition = i;

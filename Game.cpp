@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <algorithm>
+#include <iostream>
 
 Game::Game() {
     vector<ColorModel *> colorModels;
@@ -42,14 +43,27 @@ vector<Circle *> Game::getAvailableCircleFromStart(BoardCirclePieceInfo *boardCi
             break;
         }
     }
-    if (circlePosition + offset > circles.size() - 4) {
-        // go to next color
-        auto nextCircles = board_->getCirclesByColor(
-                board_->getNextColor(boardCirclePieceInfo->getCircle()->getColor()));
-        positionCircles.push_back(nextCircles[circlePosition + offset - (circles.size() - 4)]);
-    } else {
-        // stay in the same color
-        positionCircles.push_back(circles[circlePosition + offset]);
+    if (circlePosition + offset >= circles.size() - 4 && circlePosition + offset < circles.size()) {
+        if (circlePosition >= 10 &&
+            boardCirclePieceInfo->getCircle()->getColor() == boardCirclePieceInfo->getPiece()->getColor()) {
+            positionCircles.push_back(circles[circlePosition + offset]);
+        } else if (circlePosition < 10 && board_->getNextColor(boardCirclePieceInfo->getCircle()->getColor()) ==
+                                          boardCirclePieceInfo->getPiece()->getColor()) {
+            auto nextCircles = board_->getCirclesByColor(
+                    board_->getNextColor(boardCirclePieceInfo->getCircle()->getColor()));
+            positionCircles.push_back(nextCircles[circlePosition + offset]);
+        }
+    }
+    if (circlePosition < circles.size() - 4) {
+        if (circlePosition + offset >= circles.size() - 4) {
+            // go to next color
+            auto nextCircles = board_->getCirclesByColor(
+                    board_->getNextColor(boardCirclePieceInfo->getCircle()->getColor()));
+            positionCircles.push_back(nextCircles[circlePosition + offset - (circles.size() - 4)]);
+        } else {
+            // stay in the same color
+            positionCircles.push_back(circles[circlePosition + offset]);
+        }
     }
     return positionCircles;
 }
@@ -64,7 +78,8 @@ vector<Circle *> Game::returnAvailablePositions(BoardCirclePieceInfo *boardCircl
                 infos.push_back(info);
             }
         }
-        if (infos.empty() || infos.size() == 1) {
+//        TODO revert this
+        if (infos.empty()) {
             // handle with different color TODO
             availableCircles.push_back(circle);
         }
@@ -103,9 +118,8 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 }
 
 void Game::loop() {
-    int i = 0;
     int turn_count = 0;
-    while (true) {
+    while (!isGameFinished()) {
         int diceNumber = rollDice();
         aiEngine_->run(turn_, diceNumber);
         physicsEngine_->run();
@@ -119,6 +133,7 @@ void Game::loop() {
 int Game::rollDice() {
     srand((unsigned) time(0));
     int diceNumber = 1 + (rand() % 6);
+    cout << diceNumber << endl;
     return diceNumber;
 }
 
@@ -132,4 +147,25 @@ Command *Game::popCommand() {
 
 vector<Circle *> Game::getCircleByColor(Color color) {
     return board_->getCirclesByColor(color);
+}
+
+bool Game::isGameFinished() {
+    auto colors = board_->getColors();
+    for (auto color : colors) {
+        auto circles = board_->getCirclesByColor(color);
+        int count = 0;
+        vector<int> pos;
+        for (int i = circles.size() - 4; i < circles.size(); ++i) {
+            for (auto info: boardCirclePieceInfo_) {
+                if (info->getCircle() == circles[i] && circles[i]->getColor() == info->getPiece()->getColor()) {
+                    ++count;
+                    pos.push_back(i);
+                }
+            }
+        }
+        if (count == 4) {
+            return true;
+        }
+    }
+    return false;
 }

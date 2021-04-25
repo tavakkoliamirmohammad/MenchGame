@@ -21,7 +21,14 @@ void MoveCommand::execute() {
             break;
         }
     }
-    cout << "Moving piece " << piece_->getColor() << " to circle with color " << circle_->getColor() << " in position "
+    int piecePosition = 0;
+    for (int i = 0; i < game_->getPlayerPieces(circle_->getColor()).size(); ++i) {
+        if (game_->getPlayerPieces(circle_->getColor())[i] == piece_) {
+            piecePosition = i;
+            break;
+        }
+    }
+    cout << "Moving piece " << piece_->getColor() << " Position " << piecePosition << " to circle with color " << circle_->getColor() << " in position "
          << circlePosition << endl;
 }
 

@@ -26,6 +26,8 @@ public:
 
     void movePiece(Piece *piece, Circle *newPosition);
 
+    bool isGameFinished();
+
     Command *popCommand();
 
     void pushCommand(Command *);

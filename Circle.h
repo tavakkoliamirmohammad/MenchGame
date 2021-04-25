@@ -9,6 +9,8 @@ public:
 
     Color getColor();
 
+    Circle* clone();
+
 private:
     ColorModel *circleModel_;
 };

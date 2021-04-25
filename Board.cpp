@@ -6,15 +6,20 @@ Board::Board(vector<ColorModel *> colorModels) : colorModels_(std::move(colorMod
     for (auto colorModel : colorModels_) {
         vector<Circle *> circles;
         circles.reserve(14);
+        auto *coloredCircle = new Circle(colorModel);
         for (int i = 0; i < 14; ++i) {
-            circles.push_back(new Circle(colorModel));
+            circles.push_back(coloredCircle->clone());
         }
+        delete coloredCircle;
+
+        auto *coloredPiece = new Piece(colorModel);
         circlesMap_[colorModel->getColor()] = circles;
         vector<Piece *> pieces;
         pieces.reserve(4);
         for (int i = 0; i < 4; ++i) {
-            pieces.push_back(new Piece(colorModel));
+            pieces.push_back(coloredPiece->clone());
         }
+        delete coloredPiece;
         piecesMap_[colorModel->getColor()] = pieces;
         colors_.push_back(colorModel->getColor());
     }

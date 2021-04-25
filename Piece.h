@@ -10,6 +10,7 @@ public:
 
     Color getColor();
 
+    Piece* clone();
 private:
     ColorModel *colorModel_;
 };

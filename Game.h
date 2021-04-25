@@ -7,8 +7,9 @@
 #include "AIEngine.h"
 #include "PhysicsEngine.h"
 #include "CommandStream.h"
+#include "Observer.h"
 
-class Game {
+class Game : public Observer {
 public:
     Game();
 
@@ -24,7 +25,9 @@ public:
 
     void movePiece(Piece *piece, Circle *newPosition);
 
-    bool isGameFinished();
+    vector<BoardCirclePieceInfo *> getBoardCirclePieceInfos();
+
+    vector<Color> getBoardColors();
 
     Command *popCommand();
 
@@ -32,7 +35,9 @@ public:
 
     void loop();
 
-    ~Game();
+    void onNotify(GameEvent event) override;
+
+    ~Game() override;
 
 private:
 
@@ -47,6 +52,7 @@ private:
     Color turn_;
     CommandStream *commandStream_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;
+    bool isGameFinished_ = false;
 };
 
 #endif //MENSCH_GAME_H

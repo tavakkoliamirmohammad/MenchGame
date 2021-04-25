@@ -1,13 +1,13 @@
 #include "Game.h"
 #include <algorithm>
+#include "ColorModelFactory.h"
 
 Game::Game() {
     vector<ColorModel *> colorModels;
-//    TODO Factory method
-    colorModels.emplace_back(new ColorModel(Color::Blue));
-    colorModels.emplace_back(new ColorModel(Color::Green));
-    colorModels.emplace_back(new ColorModel(Color::Yellow));
-    colorModels.emplace_back(new ColorModel(Color::Red));
+    colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Blue));
+    colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Green));
+    colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Yellow));
+    colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Red));
     this->board_ = new Board(colorModels);
     for (ColorModel *colorModel : colorModels) {
         this->players_.emplace_back(new Player(colorModel));
@@ -114,7 +114,7 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 void Game::loop() {
     int turn_count = 0;
     srand((unsigned) time(0));
-    while (!isGameFinished()) {
+    while (!isGameFinished_) {
         int diceNumber = rollDice();
         aiEngine_->run(turn_, diceNumber);
         physicsEngine_->run();
@@ -142,27 +142,6 @@ vector<Circle *> Game::getCircleByColor(Color color) {
     return board_->getCirclesByColor(color);
 }
 
-bool Game::isGameFinished() {
-    auto colors = board_->getColors();
-    for (auto color : colors) {
-        auto circles = board_->getCirclesByColor(color);
-        int count = 0;
-        vector<int> pos;
-        for (int i = circles.size() - 4; i < circles.size(); ++i) {
-            for (auto info: boardCirclePieceInfo_) {
-                if (info->getCircle() == circles[i] && circles[i]->getColor() == info->getPiece()->getColor()) {
-                    ++count;
-                    pos.push_back(i);
-                }
-            }
-        }
-        if (count == 4) {
-            return true;
-        }
-    }
-    return false;
-}
-
 Game::~Game() {
     delete board_;
     delete physicsEngine_;
@@ -174,4 +153,18 @@ Game::~Game() {
     for (auto info: boardCirclePieceInfo_) {
         delete info;
     }
+}
+
+void Game::onNotify(GameEvent event) {
+    if (event == GameEvent::Finished) {
+        isGameFinished_ = true;
+    }
+}
+
+vector<BoardCirclePieceInfo *> Game::getBoardCirclePieceInfos() {
+    return boardCirclePieceInfo_;
+}
+
+vector<Color> Game::getBoardColors() {
+    return board_->getColors();
 }

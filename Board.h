@@ -10,7 +10,7 @@ using namespace std;
 
 class Board {
 public:
-    Board(vector<ColorModel *>);
+    explicit Board(vector<ColorModel *>);
 
     vector<Circle *> getCirclesByColor(Color);
 

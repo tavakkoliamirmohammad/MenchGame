@@ -8,6 +8,7 @@
 #include "PhysicsEngine.h"
 #include "CommandStream.h"
 #include "Observer.h"
+#include "GamePlay.h"
 
 class Game : public Observer {
 public:
@@ -18,6 +19,8 @@ public:
     vector<Circle *> getCircleByColor(Color color);
 
     vector<Circle *> returnAvailablePositions(BoardCirclePieceInfo *boardCirclePieceInfo, int offset);
+
+    bool isCircleHomeRow(Circle *circle);
 
     Circle *getStartCircleByColor(Color color);
 
@@ -37,12 +40,11 @@ public:
 
     void onNotify(GameEvent event) override;
 
+    Color getNextColor(Color color);
+
     ~Game() override;
 
 private:
-
-    vector<Circle *> getAvailableCircleFromStart(BoardCirclePieceInfo *boardCirclePieceInfo, int offset);
-
     static int rollDice();
 
     Board *board_;
@@ -51,6 +53,7 @@ private:
     PhysicsEngine *physicsEngine_;
     Color turn_;
     CommandStream *commandStream_;
+    GamePlay *gamePlay_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;
     bool isGameFinished_ = false;
 };

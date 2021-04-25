@@ -1,6 +1,5 @@
 #include "Game.h"
 #include <algorithm>
-#include <iostream>
 
 Game::Game() {
     vector<ColorModel *> colorModels;
@@ -82,6 +81,10 @@ vector<Circle *> Game::returnAvailablePositions(BoardCirclePieceInfo *boardCircl
         if (infos.empty()) {
             // handle with different color TODO
             availableCircles.push_back(circle);
+        } else if (infos.size() == 1 &&
+                   infos[0]->getPiece()->getColor() == boardCirclePieceInfo->getPiece()->getColor() &&
+                   !board_->isCircleHomeRow(infos[0]->getCircle())) {
+            availableCircles.push_back(circle);
         }
     }
     return availableCircles;
@@ -119,6 +122,7 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 
 void Game::loop() {
     int turn_count = 0;
+    srand((unsigned) time(0));
     while (!isGameFinished()) {
         int diceNumber = rollDice();
         aiEngine_->run(turn_, diceNumber);
@@ -131,7 +135,6 @@ void Game::loop() {
 }
 
 int Game::rollDice() {
-    srand((unsigned) time(0));
     int diceNumber = 1 + (rand() % 6);
     return diceNumber;
 }

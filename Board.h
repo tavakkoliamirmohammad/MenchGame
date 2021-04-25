@@ -16,6 +16,8 @@ public:
 
     vector<Piece *> getPiecesByColor(Color);
 
+    bool isCircleHomeRow(Circle *circle);
+
     vector<Color> getColors();
 
     Color getNextColor(Color color);

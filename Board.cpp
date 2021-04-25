@@ -53,3 +53,15 @@ Color Board::getNextColor(Color color) {
     int nextColorPosition = (originalColorPosition + 1) % colors_.size();
     return colors_[nextColorPosition];
 }
+
+bool Board::isCircleHomeRow(Circle *circle) {
+    auto circles = getCirclesByColor(circle->getColor());
+    int circlePosition = -1;
+    for (int i = 0; i < circles.size(); ++i) {
+        if (circles[i] == circle) {
+            circlePosition = i;
+            break;
+        }
+    }
+    return circlePosition >= 10;
+}

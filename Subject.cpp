@@ -1,8 +1,8 @@
 #include "Subject.h"
 
-void Subject::notify(GameEvent event) {
+void Subject::notify(DataCarrier *dataCarrier, GameEvent event) {
     for (auto &_observer : _observers) {
-        _observer->onNotify(event);
+        _observer->onNotify(dataCarrier, event);
     }
 }
 

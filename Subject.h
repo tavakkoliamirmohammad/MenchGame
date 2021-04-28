@@ -16,7 +16,7 @@ public:
 
 protected:
 
-    void notify(GameEvent event);
+    void notify(DataCarrier* dataCarrier, GameEvent event);
 
 private:
 

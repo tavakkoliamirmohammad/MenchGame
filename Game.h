@@ -38,7 +38,7 @@ public:
 
     void loop();
 
-    void onNotify(GameEvent event) override;
+    void onNotify(DataCarrier* dataCarrier, GameEvent event) override;
 
     Color getNextColor(Color color);
 

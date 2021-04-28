@@ -102,7 +102,7 @@ Game::~Game() {
     }
 }
 
-void Game::onNotify(GameEvent event) {
+void Game::onNotify(DataCarrier* dataCarrier, GameEvent event) {
     if (event == GameEvent::Finished) {
         isGameFinished_ = true;
     }

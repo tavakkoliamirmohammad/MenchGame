@@ -5,7 +5,8 @@
 
 enum class GameEvent {
     Finished,
-    UpdateWaitCount
+    UpdateWaitCount,
+    UpdateMovingPieceIn
 };
 
 class Observer {

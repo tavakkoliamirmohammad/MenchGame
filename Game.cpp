@@ -138,3 +138,7 @@ bool Game::isCircleHomeRow(Circle *circle) {
 Color Game::getTurnColor() {
     return turn_;
 }
+
+PhysicsEngine *Game::getPhysicsEngine() {
+    return physicsEngine_;
+}

@@ -44,6 +44,8 @@ public:
 
     Color getTurnColor();
 
+    PhysicsEngine *getPhysicsEngine();
+
     ~Game() override;
 
 private:

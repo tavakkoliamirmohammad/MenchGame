@@ -1,5 +1,6 @@
 #include "MoveCommand.h"
 #include <iostream>
+#include "MovingPieceInDataCarrier.h"
 
 using namespace std;
 
@@ -21,6 +22,11 @@ void MoveCommand::execute() {
             break;
         }
     }
+    if (game_->getStartCircleByColor(piece_->getColor()) == circle_) {
+//        TODO handle undo
+        MovingPieceInDataCarrier movingPieceInDataCarrier = MovingPieceInDataCarrier(piece_->getColor());
+        game_->getPhysicsEngine()->notify(&movingPieceInDataCarrier, GameEvent::UpdateMovingPieceIn);
+    }
     int piecePosition = 0;
     for (int i = 0; i < game_->getPlayerPieces(piece_->getColor()).size(); ++i) {
         if (game_->getPlayerPieces(piece_->getColor())[i] == piece_) {
@@ -28,7 +34,8 @@ void MoveCommand::execute() {
             break;
         }
     }
-    cout << "Moving piece " << piece_->getColor() << " Position " << piecePosition << " to circle with color " << circle_->getColor() << " in position "
+    cout << "Moving piece " << piece_->getColor() << " Position " << piecePosition << " to circle with color "
+         << circle_->getColor() << " in position "
          << circlePosition << endl;
 }
 

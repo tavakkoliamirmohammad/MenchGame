@@ -14,9 +14,7 @@ public:
 
     void removeObserver(Observer *observer);
 
-protected:
-
-    void notify(DataCarrier* dataCarrier, GameEvent event);
+    void notify(DataCarrier *dataCarrier, GameEvent event);
 
 private:
 

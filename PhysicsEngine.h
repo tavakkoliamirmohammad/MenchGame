@@ -6,7 +6,7 @@
 class Game;
 
 
-class PhysicsEngine : Subject {
+class PhysicsEngine : public Subject {
 public:
     explicit PhysicsEngine(Game *game);
 

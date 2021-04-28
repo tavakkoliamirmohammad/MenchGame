@@ -1,6 +1,10 @@
-#include "Game.h"
 #include <algorithm>
+#include <iostream>
+#include "Game.h"
 #include "ColorModelFactory.h"
+#include "GameFinishedDataCarrier.h"
+
+using namespace std;
 
 Game::Game() {
     vector<ColorModel *> colorModels;
@@ -70,6 +74,7 @@ void Game::loop() {
             turn_ = board_->getColors()[turn_count];
         }
     }
+    cout << "Winner is " << winnerColor_ << endl;
 }
 
 int Game::rollDice() {
@@ -102,9 +107,13 @@ Game::~Game() {
     }
 }
 
-void Game::onNotify(DataCarrier* dataCarrier, GameEvent event) {
+void Game::onNotify(DataCarrier *dataCarrier, GameEvent event) {
     if (event == GameEvent::Finished) {
         isGameFinished_ = true;
+        auto gameFinishedDataCarrier = dynamic_cast<GameFinishedGameCarrier *>(dataCarrier);
+        if (gameFinishedDataCarrier) {
+            winnerColor_ = gameFinishedDataCarrier->winnerColor_;
+        }
     }
 }
 
@@ -122,4 +131,8 @@ Color Game::getNextColor(Color color) {
 
 bool Game::isCircleHomeRow(Circle *circle) {
     return board_->isCircleHomeRow(circle);
+}
+
+Color Game::getTurnColor() {
+    return turn_;
 }

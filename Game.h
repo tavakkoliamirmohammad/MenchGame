@@ -38,9 +38,11 @@ public:
 
     void loop();
 
-    void onNotify(DataCarrier* dataCarrier, GameEvent event) override;
+    void onNotify(DataCarrier *dataCarrier, GameEvent event) override;
 
     Color getNextColor(Color color);
+
+    Color getTurnColor();
 
     ~Game() override;
 
@@ -52,6 +54,7 @@ private:
     AIEngine *aiEngine_;
     PhysicsEngine *physicsEngine_;
     Color turn_;
+    Color winnerColor_;
     CommandStream *commandStream_;
     GamePlay *gamePlay_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;

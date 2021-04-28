@@ -1,5 +1,6 @@
 #include "PhysicsEngine.h"
 #include "Game.h"
+#include "GameFinishedDataCarrier.h"
 
 PhysicsEngine::PhysicsEngine(Game *game) : game_(game) {
     addObserver(game_);
@@ -29,7 +30,7 @@ void PhysicsEngine::checkIsGameFinished() {
             }
         }
         if (count == 4) {
-            notify(GameEvent::Finished);
+            notify(new GameFinishedGameCarrier(game_->getTurnColor()), GameEvent::Finished);
         }
     }
 }

@@ -4,7 +4,8 @@
 #include "DataCarrier.h"
 
 enum class GameEvent {
-    Finished
+    Finished,
+    UpdateWaitCount
 };
 
 class Observer {

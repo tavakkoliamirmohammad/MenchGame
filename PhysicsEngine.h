@@ -15,6 +15,8 @@ public:
 private:
     void checkIsGameFinished();
 
+    void countWaitingTimesWhenAllPiecesAreOut();
+
     Game *game_;
 };
 

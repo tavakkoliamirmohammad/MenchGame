@@ -1,9 +1,11 @@
 #include "PhysicsEngine.h"
 #include "Game.h"
 #include "GameFinishedDataCarrier.h"
+#include "AnalyticalEngine.h"
 
 PhysicsEngine::PhysicsEngine(Game *game) : game_(game) {
     addObserver(game_);
+    addObserver(new AnalyticalEngine());
 }
 
 
@@ -13,6 +15,7 @@ void PhysicsEngine::run() {
         command->execute();
     }
     checkIsGameFinished();
+    countWaitingTimesWhenAllPiecesAreOut();
 }
 
 void PhysicsEngine::checkIsGameFinished() {
@@ -30,8 +33,26 @@ void PhysicsEngine::checkIsGameFinished() {
             }
         }
         if (count == 4) {
-            notify(new GameFinishedGameCarrier(game_->getTurnColor()), GameEvent::Finished);
+            GameFinishedGameCarrier gameFinishedGameCarrier = GameFinishedGameCarrier(game_->getTurnColor());
+            notify(&gameFinishedGameCarrier, GameEvent::Finished);
         }
     }
 }
 
+void PhysicsEngine::countWaitingTimesWhenAllPiecesAreOut() {
+    auto colors = game_->getBoardColors();
+    for (auto color : colors) {
+        bool pieceIsInBoard = false;
+        for (auto piece: game_->getPlayerPieces(color)) {
+            if (pieceIsInBoard) break;
+            for (auto info: game_->getBoardCirclePieceInfos()) {
+                if (info->getPiece() == piece) {
+                    pieceIsInBoard = true;
+                    break;
+                }
+            }
+        }
+        WaitingCountDataCarrier waitingCountDataCarrier = WaitingCountDataCarrier(color, pieceIsInBoard);
+        notify(&waitingCountDataCarrier, GameEvent::UpdateWaitCount);
+    }
+}

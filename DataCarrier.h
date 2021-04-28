@@ -2,7 +2,8 @@
 #define MENSCH_DATACARRIER_H
 
 enum class DataCarrierType {
-    GameFinishedDataCarrier
+    GameFinishedDataCarrier,
+    WaitingCountDataCarrier
 };
 
 struct DataCarrier {

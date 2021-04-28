@@ -110,9 +110,11 @@ Game::~Game() {
 void Game::onNotify(DataCarrier *dataCarrier, GameEvent event) {
     if (event == GameEvent::Finished) {
         isGameFinished_ = true;
-        auto gameFinishedDataCarrier = dynamic_cast<GameFinishedGameCarrier *>(dataCarrier);
-        if (gameFinishedDataCarrier) {
-            winnerColor_ = gameFinishedDataCarrier->winnerColor_;
+        if (dataCarrier->getDataCarrierType() == DataCarrierType::GameFinishedDataCarrier) {
+            auto gameFinishedDataCarrier = dynamic_cast<GameFinishedGameCarrier *>(dataCarrier);
+            if (gameFinishedDataCarrier) {
+                winnerColor_ = gameFinishedDataCarrier->winnerColor_;
+            }
         }
     }
 }

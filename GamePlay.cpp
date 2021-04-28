@@ -55,10 +55,13 @@ vector<Circle *> GamePlay::returnAvailablePositions(BoardCirclePieceInfo *boardC
 //        TODO revert this
         if (infos.empty()) {
             availableCircles.push_back(circle);
-        } else if (infos.size() == 1 &&
-                   infos[0]->getPiece()->getColor() == boardCirclePieceInfo->getPiece()->getColor() &&
-                   !game_->isCircleHomeRow(infos[0]->getCircle())) {
-            availableCircles.push_back(circle);
+        } else if (infos.size() == 1) {
+            if (infos[0]->getPiece()->getColor() == boardCirclePieceInfo->getPiece()->getColor() &&
+                !game_->isCircleHomeRow(infos[0]->getCircle())) {
+                availableCircles.push_back(circle);
+            } else if (infos[0]->getPiece()->getColor() != boardCirclePieceInfo->getPiece()->getColor()) {
+                availableCircles.push_back(circle);
+            }
         }
     }
     return availableCircles;

@@ -5,7 +5,7 @@
 #include "ColorModel.h"
 
 struct MovingPieceInDataCarrier : public DataCarrier {
-    MovingPieceInDataCarrier(Color color);
+    explicit MovingPieceInDataCarrier(Color color);
     DataCarrierType getDataCarrierType() override;
 
     Color color_;

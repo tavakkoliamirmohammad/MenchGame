@@ -1,6 +1,7 @@
 #include "MoveCommand.h"
 #include <iostream>
 #include "MovingPieceInDataCarrier.h"
+#include "DistanceCoveredDataCarrier.h"
 
 using namespace std;
 
@@ -26,6 +27,11 @@ void MoveCommand::execute() {
 //        TODO handle undo
         MovingPieceInDataCarrier movingPieceInDataCarrier = MovingPieceInDataCarrier(piece_->getColor());
         game_->getPhysicsEngine()->notify(&movingPieceInDataCarrier, GameEvent::UpdateMovingPieceIn);
+    } else {
+        DistanceCoveredDataCarrier distanceCoveredDataCarrier = DistanceCoveredDataCarrier(game_->getDiceNumber(),
+                                                                                           piece_->getColor());
+        game_->getPhysicsEngine()->notify(&distanceCoveredDataCarrier, GameEvent::UpdateDistanceCovered);
+
     }
     int piecePosition = 0;
     for (int i = 0; i < game_->getPlayerPieces(piece_->getColor()).size(); ++i) {

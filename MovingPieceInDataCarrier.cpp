@@ -9,5 +9,5 @@ MovingPieceInDataCarrier::MovingPieceInDataCarrier(Color color) : color_(color) 
 }
 
 DataCarrierType MovingPieceInDataCarrier::getDataCarrierType() {
-    return DataCarrierType::MovingPieceountDataCarrier;
+    return DataCarrierType::MovingInPieceCountDataCarrier;
 }

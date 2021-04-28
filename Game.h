@@ -9,6 +9,7 @@
 #include "CommandStream.h"
 #include "Observer.h"
 #include "GamePlay.h"
+#include "Dice.h"
 
 class Game : public Observer {
 public:
@@ -46,10 +47,11 @@ public:
 
     PhysicsEngine *getPhysicsEngine();
 
+    int getDiceNumber();
+
     ~Game() override;
 
 private:
-    static int rollDice();
 
     Board *board_;
     vector<Player *> players_;
@@ -60,6 +62,7 @@ private:
     CommandStream *commandStream_;
     GamePlay *gamePlay_;
     vector<BoardCirclePieceInfo *> boardCirclePieceInfo_;
+    Dice *dice_;
     bool isGameFinished_ = false;
 };
 

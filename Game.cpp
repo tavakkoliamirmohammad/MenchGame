@@ -13,6 +13,7 @@ Game::Game() {
     colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Yellow));
     colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Red));
     this->board_ = new Board(colorModels);
+    dice_ = new Dice();
     for (ColorModel *colorModel : colorModels) {
         this->players_.emplace_back(new Player(colorModel));
     }
@@ -64,9 +65,9 @@ void Game::movePiece(Piece *piece, Circle *newPosition) {
 
 void Game::loop() {
     int turn_count = 0;
-    srand((unsigned) time(0));
     while (!isGameFinished_) {
-        int diceNumber = rollDice();
+        dice_->roll();
+        int diceNumber = dice_->getNumber();
         aiEngine_->run(turn_, diceNumber);
         physicsEngine_->run();
         if (diceNumber != 6) {
@@ -75,11 +76,6 @@ void Game::loop() {
         }
     }
     cout << "Winner is " << winnerColor_ << endl;
-}
-
-int Game::rollDice() {
-    int diceNumber = 1 + (rand() % 6);
-    return diceNumber;
 }
 
 void Game::pushCommand(Command *command) {
@@ -99,6 +95,7 @@ Game::~Game() {
     delete physicsEngine_;
     delete aiEngine_;
     delete commandStream_;
+    delete dice_;
     for (auto player : players_) {
         delete player;
     }
@@ -141,4 +138,8 @@ Color Game::getTurnColor() {
 
 PhysicsEngine *Game::getPhysicsEngine() {
     return physicsEngine_;
+}
+
+int Game::getDiceNumber() {
+    return dice_->getNumber();
 }

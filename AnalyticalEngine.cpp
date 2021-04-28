@@ -17,6 +17,11 @@ void AnalyticalEngine::onNotify(DataCarrier *dataCarrier, GameEvent event) {
         updateDistanceCovered(dynamic_cast<DistanceCoveredDataCarrier *>(dataCarrier));
     }
 
+    if (event == GameEvent::PieceCollision &&
+        dataCarrier->getDataCarrierType() == DataCarrierType::PieceCollisionDataCarrier) {
+        updatePieceCollision(dynamic_cast<PieceCollisionDataCarrier *>(dataCarrier));
+    }
+
 }
 
 void AnalyticalEngine::updateWaitingCount(WaitingCountDataCarrier *waitingCountDataCarrier) {
@@ -41,5 +46,20 @@ void AnalyticalEngine::updateDistanceCovered(DistanceCoveredDataCarrier *distanc
         distancePlayed_[distanceCoveredDataCarrier->color_] += distanceCoveredDataCarrier->distance_;
     } else {
         distancePlayed_[distanceCoveredDataCarrier->color_] = distanceCoveredDataCarrier->distance_;
+    }
+}
+
+void AnalyticalEngine::updatePieceCollision(PieceCollisionDataCarrier *pieceCollisionDataCarrier) {
+    auto attackerPieceColor = pieceCollisionDataCarrier->getAttackerPiece()->getColor();
+    auto attackedPieceColor = pieceCollisionDataCarrier->getAttackedPiece()->getColor();
+    if (scoredGained_.count(attackerPieceColor) > 0) {
+        scoredGained_[attackerPieceColor] += 1;
+    } else {
+        scoredGained_[attackerPieceColor] = 1;
+    }
+    if (scoreLost_.count(attackedPieceColor) > 0) {
+        scoreLost_[attackedPieceColor] += 1;
+    } else {
+        scoreLost_[attackedPieceColor] = 1;
     }
 }

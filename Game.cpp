@@ -47,17 +47,12 @@ Circle *Game::getStartCircleByColor(Color color) {
 }
 
 void Game::movePiece(Piece *piece, Circle *newPosition) {
-    auto piecePositionInfo = getPiecePositionInfo(piece);
-    if (piecePositionInfo != nullptr) {
-        int position = -1;
-        auto it = find(boardCirclePieceInfo_.begin(), boardCirclePieceInfo_.end(), piecePositionInfo);
-        if (it != boardCirclePieceInfo_.cend()) {
-            position = distance(boardCirclePieceInfo_.begin(), it);
-        }
-        if (position != -1) {
-            boardCirclePieceInfo_.erase(boardCirclePieceInfo_.begin() + position);
-        } else {
-            std::putchar('N');
+    removePiecePositionFromBoard(piece);
+    auto circleInfos = getCirclePositionInfo(newPosition);
+    for (auto circleInfo: circleInfos) {
+        if (circleInfo->getPiece()->getColor() != piece->getColor()) {
+            movePieceToOutsideOfBoard(circleInfo->getPiece());
+            break;
         }
     }
     boardCirclePieceInfo_.push_back(new BoardCirclePieceInfo(piece, newPosition));
@@ -142,4 +137,38 @@ PhysicsEngine *Game::getPhysicsEngine() {
 
 int Game::getDiceNumber() {
     return dice_->getNumber();
+}
+
+vector<BoardCirclePieceInfo *> Game::getCirclePositionInfo(Circle *circle) {
+    vector<BoardCirclePieceInfo *> result;
+    for (auto info: boardCirclePieceInfo_) {
+        if (info->getCircle() == circle) {
+            result.push_back(info);
+        }
+    }
+    return result;
+}
+
+void Game::findAndRemoveBoardCirclePieceInfo(BoardCirclePieceInfo *boardCirclePieceInfo) {
+    int position = -1;
+    auto it = find(boardCirclePieceInfo_.begin(), boardCirclePieceInfo_.end(), boardCirclePieceInfo);
+    if (it != boardCirclePieceInfo_.cend()) {
+        position = distance(boardCirclePieceInfo_.begin(), it);
+    }
+    if (position != -1) {
+        boardCirclePieceInfo_.erase(boardCirclePieceInfo_.begin() + position);
+    } else {
+        std::putchar('N');
+    }
+}
+
+void Game::removePiecePositionFromBoard(Piece *piece) {
+    auto piecePositionInfo = getPiecePositionInfo(piece);
+    if (piecePositionInfo != nullptr) {
+        findAndRemoveBoardCirclePieceInfo(piecePositionInfo);
+    }
+}
+
+void Game::movePieceToOutsideOfBoard(Piece *piece) {
+    removePiecePositionFromBoard(piece);
 }

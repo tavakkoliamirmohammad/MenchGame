@@ -6,7 +6,7 @@
 using namespace std;
 
 MoveCommand::MoveCommand(Game *game, Piece *piece, Circle *circle) : game_(game), piece_(piece), circle_(circle) {
-
+    previousCircle_ = nullptr;
 }
 
 
@@ -16,13 +16,6 @@ void MoveCommand::execute() {
         previousCircle_ = previousPosition->getCircle();
     }
     game_->movePiece(piece_, circle_);
-    int circlePosition = 0;
-    for (int i = 0; i < game_->getCircleByColor(circle_->getColor()).size(); ++i) {
-        if (game_->getCircleByColor(circle_->getColor())[i] == circle_) {
-            circlePosition = i;
-            break;
-        }
-    }
     if (game_->getStartCircleByColor(piece_->getColor()) == circle_) {
 //        TODO handle undo
         MovingPieceInDataCarrier movingPieceInDataCarrier = MovingPieceInDataCarrier(piece_->getColor());
@@ -33,6 +26,15 @@ void MoveCommand::execute() {
         game_->getPhysicsEngine()->notify(&distanceCoveredDataCarrier, GameEvent::UpdateDistanceCovered);
 
     }
+
+    int circlePosition = 0;
+    for (int i = 0; i < game_->getCircleByColor(circle_->getColor()).size(); ++i) {
+        if (game_->getCircleByColor(circle_->getColor())[i] == circle_) {
+            circlePosition = i;
+            break;
+        }
+    }
+
     int piecePosition = 0;
     for (int i = 0; i < game_->getPlayerPieces(piece_->getColor()).size(); ++i) {
         if (game_->getPlayerPieces(piece_->getColor())[i] == piece_) {

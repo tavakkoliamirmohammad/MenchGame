@@ -5,7 +5,8 @@ enum class DataCarrierType {
     GameFinishedDataCarrier,
     WaitingCountDataCarrier,
     MovingInPieceCountDataCarrier,
-    DistanceCoveredDataCarrier
+    DistanceCoveredDataCarrier,
+    PieceCollisionDataCarrier
 };
 
 struct DataCarrier {

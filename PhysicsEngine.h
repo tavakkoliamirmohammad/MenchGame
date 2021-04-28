@@ -17,6 +17,8 @@ private:
 
     void countWaitingTimesWhenAllPiecesAreOut();
 
+    void checkCollision();
+
     Game *game_;
 };
 

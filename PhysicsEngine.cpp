@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "GameFinishedDataCarrier.h"
 #include "AnalyticalEngine.h"
+#include "MovePieceOutOfBoard.h"
+#include "PieceCollisionDataCarrier.h"
 
 PhysicsEngine::PhysicsEngine(Game *game) : game_(game) {
     addObserver(game_);
@@ -11,11 +13,14 @@ PhysicsEngine::PhysicsEngine(Game *game) : game_(game) {
 
 void PhysicsEngine::run() {
     Command *command = game_->popCommand();
-    if (command != nullptr) {
+    while (command != nullptr) {
         command->execute();
+        command = game_->popCommand();
+        checkIsGameFinished();
+        countWaitingTimesWhenAllPiecesAreOut();
+        checkCollision();
     }
-    checkIsGameFinished();
-    countWaitingTimesWhenAllPiecesAreOut();
+
 }
 
 void PhysicsEngine::checkIsGameFinished() {
@@ -55,4 +60,24 @@ void PhysicsEngine::countWaitingTimesWhenAllPiecesAreOut() {
         WaitingCountDataCarrier waitingCountDataCarrier = WaitingCountDataCarrier(color, pieceIsInBoard);
         notify(&waitingCountDataCarrier, GameEvent::UpdateWaitCount);
     }
+}
+
+void PhysicsEngine::checkCollision() {
+    auto boardCirclePieceInfos = game_->getBoardCirclePieceInfos();
+    for (int i = 0; i < boardCirclePieceInfos.size(); ++i) {
+        for (int j = i + 1; j < boardCirclePieceInfos.size(); ++j) {
+            if (boardCirclePieceInfos[i]->getCircle() == boardCirclePieceInfos[j]->getCircle() &&
+                boardCirclePieceInfos[i]->getPiece()->getColor() != boardCirclePieceInfos[j]->getPiece()->getColor()) {
+                auto attackedPiece = boardCirclePieceInfos[i]->getPiece()->getColor() != game_->getTurnColor()
+                                     ? boardCirclePieceInfos[i]->getPiece() : boardCirclePieceInfos[j]->getPiece();
+                auto attackerPiece = boardCirclePieceInfos[i]->getPiece()->getColor() == game_->getTurnColor()
+                                     ? boardCirclePieceInfos[i]->getPiece() : boardCirclePieceInfos[j]->getPiece();
+                game_->pushCommand(new MovePieceOutOfBoard(game_, attackedPiece));
+                PieceCollisionDataCarrier pieceCollisionDataCarrier = PieceCollisionDataCarrier(attackedPiece,
+                                                                                                attackerPiece);
+                notify(&pieceCollisionDataCarrier, GameEvent::PieceCollision);
+            }
+        }
+    }
+
 }

@@ -27,6 +27,8 @@ public:
 
     BoardCirclePieceInfo *getPiecePositionInfo(Piece *piece);
 
+    vector<BoardCirclePieceInfo *> getCirclePositionInfo(Circle *circle);
+
     void movePiece(Piece *piece, Circle *newPosition);
 
     vector<BoardCirclePieceInfo *> getBoardCirclePieceInfos();
@@ -49,9 +51,15 @@ public:
 
     int getDiceNumber();
 
+    void movePieceToOutsideOfBoard(Piece *piece);
+
     ~Game() override;
 
 private:
+
+    void findAndRemoveBoardCirclePieceInfo(BoardCirclePieceInfo *boardCirclePieceInfo);
+
+    void removePiecePositionFromBoard(Piece *piece);
 
     Board *board_;
     vector<Player *> players_;

@@ -17,7 +17,7 @@ Command *AIEngine::makeMove(Color color, int diceNumber) {
         } else {
             auto positions = game_->returnAvailablePositions(boardCirclePieceInfo, diceNumber);
             if (!positions.empty()) {
-                return new MoveCommand(game_, piece, positions[0]);
+                return new MoveCommand(game_, piece, positions[rand() % positions.size()]);
             }
         }
     }

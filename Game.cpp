@@ -48,13 +48,6 @@ Circle *Game::getStartCircleByColor(Color color) {
 
 void Game::movePiece(Piece *piece, Circle *newPosition) {
     removePiecePositionFromBoard(piece);
-    auto circleInfos = getCirclePositionInfo(newPosition);
-    for (auto circleInfo: circleInfos) {
-        if (circleInfo->getPiece()->getColor() != piece->getColor()) {
-            movePieceToOutsideOfBoard(circleInfo->getPiece());
-            break;
-        }
-    }
     boardCirclePieceInfo_.push_back(new BoardCirclePieceInfo(piece, newPosition));
 }
 

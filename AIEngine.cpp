@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <random>
 #include "AIEngine.h"
 #include "MoveCommand.h"
 
@@ -7,6 +9,7 @@ AIEngine::AIEngine(Game *game) : game_(game) {
 
 Command *AIEngine::makeMove(Color color, int diceNumber) {
     auto pieces = game_->getPlayerPieces(color);
+    std::shuffle(std::begin(pieces), std::end(pieces), std::mt19937(std::random_device()()));
     for (Piece *piece : pieces) {
         BoardCirclePieceInfo *boardCirclePieceInfo = game_->getPiecePositionInfo(piece);
         if (boardCirclePieceInfo == nullptr) {

@@ -1,13 +1,12 @@
 #include "PhysicsEngine.h"
 #include "Game.h"
 #include "GameFinishedDataCarrier.h"
-#include "AnalyticalEngine.h"
 #include "MovePieceOutOfBoard.h"
 #include "PieceCollisionDataCarrier.h"
 
 PhysicsEngine::PhysicsEngine(Game *game) : game_(game) {
     addObserver(game_);
-    addObserver(new AnalyticalEngine());
+    addObserver(game_->getAnalyticalEngine());
 }
 
 
@@ -79,5 +78,4 @@ void PhysicsEngine::checkCollision() {
             }
         }
     }
-
 }

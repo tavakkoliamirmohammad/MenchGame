@@ -1,6 +1,7 @@
-#include "Game.h"
+#include "GameExecutioner.h"
 
 int main() {
-    Game *game = new Game();
-    game->loop();
+    GameExecutioner gameExecutioner;
+    gameExecutioner.execute(10);
+//    gameExecutioner.plot();
 }

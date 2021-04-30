@@ -11,7 +11,7 @@ using namespace std;
 class PlottingEngine {
 public:
     static void plot(const std::string &fileName, const vector<Color> &colors, unordered_map<Color, vector<int>> &data,
-                     unordered_map<Color, vector<double>> &times);
+                     vector<double> &times);
 
 };
 

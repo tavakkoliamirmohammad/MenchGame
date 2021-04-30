@@ -27,24 +27,24 @@ void MoveCommand::execute() {
 
     }
 
-    int circlePosition = 0;
-    for (int i = 0; i < game_->getCircleByColor(circle_->getColor()).size(); ++i) {
-        if (game_->getCircleByColor(circle_->getColor())[i] == circle_) {
-            circlePosition = i;
-            break;
-        }
-    }
-
-    int piecePosition = 0;
-    for (int i = 0; i < game_->getPlayerPieces(piece_->getColor()).size(); ++i) {
-        if (game_->getPlayerPieces(piece_->getColor())[i] == piece_) {
-            piecePosition = i;
-            break;
-        }
-    }
-    cout << "Moving piece " << piece_->getColor() << " Position " << piecePosition << " to circle with color "
-         << circle_->getColor() << " in position "
-         << circlePosition << endl;
+//    int circlePosition = 0;
+//    for (int i = 0; i < game_->getCircleByColor(circle_->getColor()).size(); ++i) {
+//        if (game_->getCircleByColor(circle_->getColor())[i] == circle_) {
+//            circlePosition = i;
+//            break;
+//        }
+//    }
+//
+//    int piecePosition = 0;
+//    for (int i = 0; i < game_->getPlayerPieces(piece_->getColor()).size(); ++i) {
+//        if (game_->getPlayerPieces(piece_->getColor())[i] == piece_) {
+//            piecePosition = i;
+//            break;
+//        }
+//    }
+//    cout << "Moving piece " << piece_->getColor() << " Position " << piecePosition << " to circle with color "
+//         << circle_->getColor() << " in position "
+//         << circlePosition << endl;
 }
 
 void MoveCommand::undo() {

@@ -2,6 +2,7 @@
 #define MENSCH_PHYSICSENGINE_H
 
 #include "Subject.h"
+#include "AnalyticalEngine.h"
 
 class Game;
 

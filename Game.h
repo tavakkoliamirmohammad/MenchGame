@@ -13,7 +13,7 @@
 
 class Game : public Observer {
 public:
-    Game();
+    explicit Game(AnalyticalEngine *analyticalEngine);
 
     vector<Piece *> getPlayerPieces(Color color);
 
@@ -53,6 +53,8 @@ public:
 
     void movePieceToOutsideOfBoard(Piece *piece);
 
+    AnalyticalEngine *getAnalyticalEngine();
+
     ~Game() override;
 
 private:
@@ -66,6 +68,7 @@ private:
     AIEngine *aiEngine_;
     PhysicsEngine *physicsEngine_;
     Color turn_;
+    AnalyticalEngine *analyticalEngine_;
     Color winnerColor_;
     CommandStream *commandStream_;
     GamePlay *gamePlay_;

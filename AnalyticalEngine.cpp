@@ -63,3 +63,23 @@ void AnalyticalEngine::updatePieceCollision(PieceCollisionDataCarrier *pieceColl
         scoreLost_[attackedPieceColor] = 1;
     }
 }
+
+int AnalyticalEngine::getWaitingCountValue(Color color) {
+    return waitingCount_[color];
+}
+
+int AnalyticalEngine::getMovingPieceInCountValue(Color color) {
+    return movingPieceInCount_[color];
+}
+
+int AnalyticalEngine::getDistancePlayed(Color color) {
+    return distancePlayed_[color];
+}
+
+int AnalyticalEngine::getScoredGainedValue(Color color) {
+    return scoredGained_[color];
+}
+
+int AnalyticalEngine::getScoreLostValue(Color color) {
+    return scoreLost_[color];
+}

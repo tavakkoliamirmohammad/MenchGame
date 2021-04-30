@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Game::Game() {
+Game::Game(AnalyticalEngine *analyticalEngine) : analyticalEngine_(analyticalEngine) {
     vector<ColorModel *> colorModels;
     colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Blue));
     colorModels.emplace_back(ColorModelFactory::createColorModel(Color::Green));
@@ -164,4 +164,8 @@ void Game::removePiecePositionFromBoard(Piece *piece) {
 
 void Game::movePieceToOutsideOfBoard(Piece *piece) {
     removePiecePositionFromBoard(piece);
+}
+
+AnalyticalEngine *Game::getAnalyticalEngine() {
+    return analyticalEngine_;
 }

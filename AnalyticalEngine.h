@@ -15,7 +15,16 @@ class AnalyticalEngine : public Observer {
 public:
     void onNotify(DataCarrier *dataCarrier, GameEvent event) override;
 
-private:
+    int getWaitingCountValue(Color color);
+
+    int getMovingPieceInCountValue(Color color);
+
+    int getDistancePlayed(Color color);
+
+    int getScoredGainedValue(Color color);
+
+    int getScoreLostValue(Color color);
+
 private:
     void updateWaitingCount(WaitingCountDataCarrier *waitingCountDataCarrier);
 

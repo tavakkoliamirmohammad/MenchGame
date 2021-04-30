@@ -10,8 +10,9 @@ using namespace std;
 
 class PlottingEngine {
 public:
-    static void plot(const std::string &fileName, const vector<Color> &colors, unordered_map<Color, vector<int>> &data,
-                     vector<double> &times);
+    static void plot(const std::string &name, const std::string &ytitle, const vector<Color> &colors,
+                     unordered_map<Color, vector<int>> &data,
+                     vector<double> &times, bool cumulative);
 
 };
 

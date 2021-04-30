@@ -23,5 +23,9 @@ void GameExecutioner::execute(int executionCount) {
 }
 
 void GameExecutioner::plot() {
-    PlottingEngine::plot("test", colors_, waitingCount_, times_);
+    PlottingEngine::plot("waiting_count", "Waiting Count", colors_, waitingCount_, times_, true);
+    PlottingEngine::plot("score_gained", "Score Gained", colors_, scoredGained_, times_, true);
+    PlottingEngine::plot("score_lost", "Score Lost", colors_, scoreLost_, times_, true);
+    PlottingEngine::plot("distance_played", "Distance Played", colors_, distancePlayed_, times_, true);
+    PlottingEngine::plot("moving_piece_in_count", "Moving Piece In Count", colors_, movingPieceInCount_, times_, true);
 }

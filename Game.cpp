@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "ColorModelFactory.h"
 #include "GameFinishedDataCarrier.h"
-
+#include <unistd.h>
 using namespace std;
 
 Game::Game(AnalyticalEngine *analyticalEngine) : analyticalEngine_(analyticalEngine) {
@@ -62,6 +62,7 @@ void Game::loop() {
             turn_count = (turn_count + 1) % board_->getColors().size();
             turn_ = board_->getColors()[turn_count];
         }
+        usleep(1 * 1000);
     }
     cout << "Winner is " << winnerColor_ << endl;
 }

@@ -19,7 +19,7 @@ void PhysicsEngine::run() {
         checkIsGameFinished();
         countWaitingTimesWhenAllPiecesAreOut();
         checkCollision();
-//        checkTrap();
+        checkTrap();
     }
 
 }

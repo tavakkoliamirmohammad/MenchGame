@@ -3,5 +3,5 @@
 int main() {
     GameExecutioner gameExecutioner;
     gameExecutioner.execute(1000);
-    gameExecutioner.plot("collision_");
+    gameExecutioner.plot("trapCollision_");
 }

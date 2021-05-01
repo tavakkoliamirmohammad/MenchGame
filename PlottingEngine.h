@@ -10,9 +10,18 @@ using namespace std;
 
 class PlottingEngine {
 public:
-    static void plot(const std::string &name, const std::string &ytitle, const vector<Color> &colors,
-                     unordered_map<Color, vector<int>> &data,
-                     vector<double> &times, bool cumulative);
+    PlottingEngine(int width, int height);
+
+    void cumulativePlot(const std::string &name, const std::string &ytitle, const vector<Color> &colors,
+                        unordered_map<Color, vector<int>> &data,
+                        vector<double> &times) const;
+
+    void windowedPlot(const std::string &name, const std::string &ytitle, const vector<Color> &colors,
+                      unordered_map<Color, vector<int>> &data,
+                      vector<double> &times, int interval) const;
+
+private:
+    int width_, height_;
 
 };
 

@@ -8,6 +8,7 @@
 #include "MovingPieceInDataCarrier.h"
 #include "DistanceCoveredDataCarrier.h"
 #include "PieceCollisionDataCarrier.h"
+#include "StepIntoTrapDataCarrier.h"
 
 using namespace std;
 
@@ -33,6 +34,12 @@ private:
     void updateDistanceCovered(DistanceCoveredDataCarrier *distanceCoveredDataCarrier);
 
     void updatePieceCollision(PieceCollisionDataCarrier *pieceCollisionDataCarrier);
+
+    void updateStepIntoTrap(StepIntoTrapDataCarrier *stepIntoTrapDataCarrier);
+
+    void updateScoreGained(Color color);
+
+    void updateScoreLost(Color color);
 
     unordered_map<Color, int> waitingCount_;
     unordered_map<Color, int> movingPieceInCount_;

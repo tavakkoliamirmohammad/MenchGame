@@ -1,14 +1,24 @@
+#include <utility>
+#include <numeric>
+#include <algorithm>
+#include <random>
+
 #include "Board.h"
 
-#include <utility>
+using namespace std;
 
 Board::Board(vector<ColorModel *> colorModels) : colorModels_(std::move(colorModels)) {
+    vector<Circle *> trapCircles;
     for (auto colorModel : colorModels_) {
         vector<Circle *> circles;
         circles.reserve(14);
         auto *coloredCircle = new Circle(colorModel);
         for (int i = 0; i < 14; ++i) {
-            circles.push_back(coloredCircle->clone());
+            auto c = coloredCircle->clone();
+            circles.push_back(c);
+            if (i < 10) {
+                trapCircles.push_back(c);
+            }
         }
         delete coloredCircle;
 
@@ -22,6 +32,13 @@ Board::Board(vector<ColorModel *> colorModels) : colorModels_(std::move(colorMod
         delete coloredPiece;
         piecesMap_[colorModel->getColor()] = pieces;
         colors_.push_back(colorModel->getColor());
+    }
+    vector<int> random_numbers(trapCircles.size());
+    iota(random_numbers.begin(), random_numbers.end(), 1);
+
+    shuffle(random_numbers.begin(), random_numbers.end(), mt19937(random_device()()));
+    for (int i = 0; i < 8; ++i) {
+        traps_.push_back(trapCircles[random_numbers[i]]);
     }
 }
 
@@ -69,4 +86,8 @@ bool Board::isCircleHomeRow(Circle *circle) {
         }
     }
     return circlePosition >= 10;
+}
+
+vector<Circle *> Board::getTraps() {
+    return traps_;
 }

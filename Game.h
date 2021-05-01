@@ -55,6 +55,8 @@ public:
 
     AnalyticalEngine *getAnalyticalEngine();
 
+    vector<Circle *> getTraps();
+
     ~Game() override;
 
 private:

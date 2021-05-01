@@ -8,7 +8,8 @@ enum class GameEvent {
     UpdateWaitCount,
     UpdateMovingPieceIn,
     UpdateDistanceCovered,
-    PieceCollision
+    PieceCollision,
+    StepIntoTrap
 };
 
 class Observer {

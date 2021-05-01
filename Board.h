@@ -22,12 +22,15 @@ public:
 
     Color getNextColor(Color color);
 
+    vector<Circle *> getTraps();
+
     ~Board();
 
 private:
     unordered_map<Color, vector<Circle *>> circlesMap_;
     unordered_map<Color, vector<Piece *>> piecesMap_;
     vector<ColorModel *> colorModels_;
+    vector<Circle *> traps_;
     vector<Color> colors_;
 };
 

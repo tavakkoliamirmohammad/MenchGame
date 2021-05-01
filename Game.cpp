@@ -1,9 +1,11 @@
 #include <algorithm>
 #include <iostream>
+#include <unistd.h>
+#include <random>
 #include "Game.h"
 #include "ColorModelFactory.h"
 #include "GameFinishedDataCarrier.h"
-#include <unistd.h>
+
 using namespace std;
 
 Game::Game(AnalyticalEngine *analyticalEngine) : analyticalEngine_(analyticalEngine) {
@@ -169,4 +171,8 @@ void Game::movePieceToOutsideOfBoard(Piece *piece) {
 
 AnalyticalEngine *Game::getAnalyticalEngine() {
     return analyticalEngine_;
+}
+
+vector<Circle *> Game::getTraps() {
+    return board_->getTraps();
 }

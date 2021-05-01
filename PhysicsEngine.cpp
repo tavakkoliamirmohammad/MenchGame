@@ -1,8 +1,9 @@
 #include "PhysicsEngine.h"
 #include "Game.h"
 #include "GameFinishedDataCarrier.h"
-#include "MovePieceOutOfBoard.h"
+#include "MovePieceOutOfBoardCommand.h"
 #include "PieceCollisionDataCarrier.h"
+#include "StepIntoTrapDataCarrier.h"
 
 PhysicsEngine::PhysicsEngine(Game *game) : game_(game) {
     addObserver(game_);
@@ -17,7 +18,8 @@ void PhysicsEngine::run() {
         command = game_->popCommand();
         checkIsGameFinished();
         countWaitingTimesWhenAllPiecesAreOut();
-        checkCollision();
+//        checkCollision();
+//        checkTrap();
     }
 
 }
@@ -71,10 +73,23 @@ void PhysicsEngine::checkCollision() {
                                      ? boardCirclePieceInfos[i]->getPiece() : boardCirclePieceInfos[j]->getPiece();
                 auto attackerPiece = boardCirclePieceInfos[i]->getPiece()->getColor() == game_->getTurnColor()
                                      ? boardCirclePieceInfos[i]->getPiece() : boardCirclePieceInfos[j]->getPiece();
-                game_->pushCommand(new MovePieceOutOfBoard(game_, attackedPiece));
+                game_->pushCommand(new MovePieceOutOfBoardCommand(game_, attackedPiece));
                 PieceCollisionDataCarrier pieceCollisionDataCarrier = PieceCollisionDataCarrier(attackedPiece,
                                                                                                 attackerPiece);
                 notify(&pieceCollisionDataCarrier, GameEvent::PieceCollision);
+            }
+        }
+    }
+}
+
+void PhysicsEngine::checkTrap() {
+    auto boardCirclePieceInfos = game_->getBoardCirclePieceInfos();
+    for (auto info : boardCirclePieceInfos) {
+        for (auto trap : game_->getTraps()) {
+            if (trap == info->getCircle()) {
+                game_->pushCommand(new MovePieceOutOfBoardCommand(game_, info->getPiece()));
+                StepIntoTrapDataCarrier stepIntoTrapDataCarrier = StepIntoTrapDataCarrier(info->getPiece());
+                notify(&stepIntoTrapDataCarrier, GameEvent::StepIntoTrap);
             }
         }
     }

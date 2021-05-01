@@ -22,6 +22,11 @@ void AnalyticalEngine::onNotify(DataCarrier *dataCarrier, GameEvent event) {
         updatePieceCollision(dynamic_cast<PieceCollisionDataCarrier *>(dataCarrier));
     }
 
+    if (event == GameEvent::StepIntoTrap &&
+        dataCarrier->getDataCarrierType() == DataCarrierType::StepIntoTrapDataCarrier) {
+        updateStepIntoTrap(dynamic_cast<StepIntoTrapDataCarrier *>(dataCarrier));
+    }
+
 }
 
 void AnalyticalEngine::updateWaitingCount(WaitingCountDataCarrier *waitingCountDataCarrier) {
@@ -52,16 +57,8 @@ void AnalyticalEngine::updateDistanceCovered(DistanceCoveredDataCarrier *distanc
 void AnalyticalEngine::updatePieceCollision(PieceCollisionDataCarrier *pieceCollisionDataCarrier) {
     auto attackerPieceColor = pieceCollisionDataCarrier->getAttackerPiece()->getColor();
     auto attackedPieceColor = pieceCollisionDataCarrier->getAttackedPiece()->getColor();
-    if (scoredGained_.count(attackerPieceColor) > 0) {
-        scoredGained_[attackerPieceColor] += 1;
-    } else {
-        scoredGained_[attackerPieceColor] = 1;
-    }
-    if (scoreLost_.count(attackedPieceColor) > 0) {
-        scoreLost_[attackedPieceColor] += 1;
-    } else {
-        scoreLost_[attackedPieceColor] = 1;
-    }
+    updateScoreGained(attackerPieceColor);
+    updateScoreLost(attackedPieceColor);
 }
 
 int AnalyticalEngine::getWaitingCountValue(Color color) {
@@ -82,4 +79,24 @@ int AnalyticalEngine::getScoredGainedValue(Color color) {
 
 int AnalyticalEngine::getScoreLostValue(Color color) {
     return scoreLost_[color];
+}
+
+void AnalyticalEngine::updateScoreGained(Color color) {
+    if (scoredGained_.count(color) > 0) {
+        scoredGained_[color] += 1;
+    } else {
+        scoredGained_[color] = 1;
+    }
+}
+
+void AnalyticalEngine::updateScoreLost(Color color) {
+    if (scoreLost_.count(color) > 0) {
+        scoreLost_[color] += 1;
+    } else {
+        scoreLost_[color] = 1;
+    }
+}
+
+void AnalyticalEngine::updateStepIntoTrap(StepIntoTrapDataCarrier *stepIntoTrapDataCarrier) {
+    updateScoreLost(stepIntoTrapDataCarrier->getPiece()->getColor());
 }

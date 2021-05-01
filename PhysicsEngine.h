@@ -20,6 +20,8 @@ private:
 
     void checkCollision();
 
+    void checkTrap();
+
     Game *game_;
 };
 

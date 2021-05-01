@@ -22,19 +22,21 @@ void GameExecutioner::execute(int executionCount) {
     }
 }
 
-void GameExecutioner::plot() {
+void GameExecutioner::plot(const string& prefix) {
     PlottingEngine plottingEngine(1200, 780);
-    plottingEngine.cumulativePlot("waiting_count", "Waiting Count", colors_, waitingCount_, times_);
-    plottingEngine.cumulativePlot("score_gained", "Score Gained", colors_, scoredGained_, times_);
-    plottingEngine.cumulativePlot("score_lost", "Score Lost", colors_, scoreLost_, times_);
-    plottingEngine.cumulativePlot("distance_played", "Distance Played", colors_, distancePlayed_, times_);
-    plottingEngine.cumulativePlot("moving_piece_in_count", "Moving Piece In Count", colors_, movingPieceInCount_,
+    plottingEngine.cumulativePlot(prefix + "waiting_count", "Waiting Count", colors_, waitingCount_, times_);
+    plottingEngine.cumulativePlot(prefix + "score_gained", "Score Gained", colors_, scoredGained_, times_);
+    plottingEngine.cumulativePlot(prefix + "score_lost", "Score Lost", colors_, scoreLost_, times_);
+    plottingEngine.cumulativePlot(prefix + "distance_played", "Distance Played", colors_, distancePlayed_, times_);
+    plottingEngine.cumulativePlot(prefix + "moving_piece_in_count", "Moving Piece In Count", colors_,
+                                  movingPieceInCount_,
                                   times_);
     int interval = 2;
-    plottingEngine.windowedPlot("waiting_count", "Waiting Count", colors_, waitingCount_, times_, interval);
-    plottingEngine.windowedPlot("score_gained", "Score Gained", colors_, scoredGained_, times_, interval);
-    plottingEngine.windowedPlot("score_lost", "Score Lost", colors_, scoreLost_, times_, interval);
-    plottingEngine.windowedPlot("distance_played", "Distance Played", colors_, distancePlayed_, times_, interval);
-    plottingEngine.windowedPlot("moving_piece_in_count", "Moving Piece In Count", colors_, movingPieceInCount_,
+    plottingEngine.windowedPlot(prefix + "waiting_count", "Waiting Count", colors_, waitingCount_, times_, interval);
+    plottingEngine.windowedPlot(prefix + "score_gained", "Score Gained", colors_, scoredGained_, times_, interval);
+    plottingEngine.windowedPlot(prefix + "score_lost", "Score Lost", colors_, scoreLost_, times_, interval);
+    plottingEngine.windowedPlot(prefix + "distance_played", "Distance Played", colors_, distancePlayed_, times_,
+                                interval);
+    plottingEngine.windowedPlot(prefix + "moving_piece_in_count", "Moving Piece In Count", colors_, movingPieceInCount_,
                                 times_, interval);
 }

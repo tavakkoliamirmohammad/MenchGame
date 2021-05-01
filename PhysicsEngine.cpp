@@ -18,7 +18,7 @@ void PhysicsEngine::run() {
         command = game_->popCommand();
         checkIsGameFinished();
         countWaitingTimesWhenAllPiecesAreOut();
-//        checkCollision();
+        checkCollision();
 //        checkTrap();
     }
 

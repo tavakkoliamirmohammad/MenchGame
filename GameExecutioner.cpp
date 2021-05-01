@@ -19,10 +19,11 @@ void GameExecutioner::execute(int executionCount) {
             distancePlayed_[color].push_back(game.getAnalyticalEngine()->getDistancePlayed(color));
             movingPieceInCount_[color].push_back(game.getAnalyticalEngine()->getMovingPieceInCountValue(color));
         }
+        cout << "Iteration " << i + 1 << endl;
     }
 }
 
-void GameExecutioner::plot(const string& prefix) {
+void GameExecutioner::plot(const string &prefix) {
     PlottingEngine plottingEngine(1200, 780);
     plottingEngine.cumulativePlot(prefix + "waiting_count", "Waiting Count", colors_, waitingCount_, times_);
     plottingEngine.cumulativePlot(prefix + "score_gained", "Score Gained", colors_, scoredGained_, times_);
@@ -31,7 +32,7 @@ void GameExecutioner::plot(const string& prefix) {
     plottingEngine.cumulativePlot(prefix + "moving_piece_in_count", "Moving Piece In Count", colors_,
                                   movingPieceInCount_,
                                   times_);
-    int interval = 2;
+    int interval = 300;
     plottingEngine.windowedPlot(prefix + "waiting_count", "Waiting Count", colors_, waitingCount_, times_, interval);
     plottingEngine.windowedPlot(prefix + "score_gained", "Score Gained", colors_, scoredGained_, times_, interval);
     plottingEngine.windowedPlot(prefix + "score_lost", "Score Lost", colors_, scoreLost_, times_, interval);

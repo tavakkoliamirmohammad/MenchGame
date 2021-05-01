@@ -12,7 +12,7 @@ class GameExecutioner {
 public:
     void execute(int executionCount);
 
-    void plot(const string& prefix);
+    void plot(const string &prefix);
 
 private:
     unordered_map<Color, vector<int>> waitingCount_;

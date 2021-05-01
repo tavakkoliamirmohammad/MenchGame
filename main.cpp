@@ -2,6 +2,6 @@
 
 int main() {
     GameExecutioner gameExecutioner;
-    gameExecutioner.execute(10);
-    gameExecutioner.plot("test_");
+    gameExecutioner.execute(1000);
+    gameExecutioner.plot("collision_");
 }

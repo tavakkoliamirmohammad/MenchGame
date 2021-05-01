@@ -64,9 +64,8 @@ void Game::loop() {
             turn_count = (turn_count + 1) % board_->getColors().size();
             turn_ = board_->getColors()[turn_count];
         }
-        usleep(1 * 1000);
+        usleep(10 * 1000);
     }
-    cout << "Winner is " << winnerColor_ << endl;
 }
 
 void Game::pushCommand(Command *command) {
